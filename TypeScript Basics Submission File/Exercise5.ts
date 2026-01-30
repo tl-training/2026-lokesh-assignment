@@ -31,16 +31,15 @@ type User = {
   title: string;
 }
 
-function parseApiResponse(response: User): User | null {  // TODO: Validate response is non-null object
-  // TODO: Check id is number and title is string, else return null
-   if (typeof response !== "object" || response === null)
+function parseApiResponse(response: unknown): User | null {  // TODO: Validate response is non-null object
+   if (typeof response !== "object" || response === null || !("id" in response) || !("title" in response) || typeof response.id !== "number" || typeof response.title !== "string")
     return null;
+  // TODO: Check id is number and title is string, else return null
+  const data = response as User;
   // TODO: Use type assertion after runtime validation
-  const data = response as { id?: unknown; title?: unknown };
-  if (typeof data.id !== "number") return null;
-  if (typeof data.title !== "string") return null;
-  return data as User;
+  return data;
   return null; // placeholder return
 }
 
 console.log(parseApiResponse({ id: 1, title: "Hello" }));
+console.log(parseApiResponse({ title: "Hello" }));

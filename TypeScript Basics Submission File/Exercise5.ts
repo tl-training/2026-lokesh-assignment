@@ -31,7 +31,7 @@ type User = {
   title: string;
 }
 
-function parseApiResponse(response: unknown): User | null {  // TODO: Validate response is non-null object
+function parseApiResponse(response: User): User | null {  // TODO: Validate response is non-null object
   // TODO: Check id is number and title is string, else return null
    if (typeof response !== "object" || response === null)
     return null;
